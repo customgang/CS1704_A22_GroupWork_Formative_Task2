@@ -1,3 +1,4 @@
+import swiftbot.*;
 
 public class Main_Game {
 	public static int round = 0;
