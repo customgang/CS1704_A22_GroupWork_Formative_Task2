@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public class VictoryDrive {
 	final static double botSpeedValue = 0.27;
 	static SwiftBotAPI swiftbot;
+	
 	public static void main() {
 		swiftbot = new SwiftBotAPI();
 		randomLights();
+		drive();
 	}
 	
 	public static void randomLights() {
@@ -29,21 +31,20 @@ public class VictoryDrive {
 			while (flashOrder.contains(flashNumToAdd));
 			flashOrder.add(flashNumToAdd);
 		}
-		System.out.println(flashOrder);
 		for (int x : flashOrder) {
 			swiftbot.setUnderlight(bottomLights[x], red);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 			}
 			swiftbot.setUnderlight(bottomLights[x], green);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 			}
 			swiftbot.setUnderlight(bottomLights[x], blue);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 			}
 			swiftbot.setUnderlight(bottomLights[x], white);
@@ -69,7 +70,7 @@ public class VictoryDrive {
 			botSpeed = 100;
 		}
 		
-		newSpeedValue = botSpeedValue * (botSpeed / 100);
+		newSpeedValue = botSpeedValue * botSpeed / 100;
 		timeToDrive = (int) (0.3 / newSpeedValue * 1000);
 		
 		swiftbot.move(botSpeed, botSpeed, timeToDrive);
