@@ -8,9 +8,31 @@ import java.util.Scanner;
 public class Main_Game {
 	public static int round = 1;
 	public static int score = 0;
+	public static String buttonPressed = null;
 	public static ArrayList<String> coloursGenerated = new ArrayList<String>();
+	
+	public static String[][] coloursToNums = {{"Red", "0"}, {"Blue", "1"}, {"Green", "2"}, {"White", "3"}};
+	static SwiftBotAPI swiftbot;
+	
   public static void main(String[] args) {
-	VictoryDrive.main();
+	swiftbot = new SwiftBotAPI();
+	
+	for (int x = 1; x <= round; x ++) {
+		listSequence();
+	}
+	
+	if (matchInput(coloursGenerated)) {
+		if (roundCheck()) {
+			if (quitCheck()) {
+				score ++;
+				VictoryDrive.main();
+			} else {
+				progressRound();
+			}
+		} else {
+			progressRound();
+		}
+	}
 	
   }
   
@@ -46,6 +68,8 @@ public class Main_Game {
 		  }
 	  }
 	  
+	  uInput.close();
+	  
 	  switch (answer) {
 	  case "y":
 		  return true;
@@ -54,6 +78,36 @@ public class Main_Game {
 	  }
   }
   
-  
+  public static String getButtonInput() {
+	  Button[] buttons = new Button[] {Button.A, Button.B, Button.X, Button.Y};
+	  
+	  swiftbot.enableButton(buttons[0], () -> {
+		 buttonPressed = "Red";
+	  });
+	  swiftbot.enableButton(buttons[1], () -> {
+		  buttonPressed = "Blue";
+	  });
+	  swiftbot.enableButton(buttons[2], () -> {
+		  buttonPressed = "Green";
+	  });
+	  swiftbot.enableButton(buttons[3], () -> {
+		  buttonPressed = "White";
+	  });
+	  
+	  while (buttonPressed == null) {
+		  
+	  }
+	  swiftbot.disableAllButtons();
+	  return buttonPressed;
+  }
+
+  public static boolean matchInput(ArrayList<String> sequence) {
+	  for (String x : sequence) {
+		  if (getButtonInput() != x) {
+			  return false;
+		  }
+	  }
+	  return true;
+  }
   
 }

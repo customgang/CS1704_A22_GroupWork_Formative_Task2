@@ -5,7 +5,7 @@ public class RandomColour {
   
   public static String randomColour() {
 	  
-	  String color = "";
+	  String colour = "";
 	  int max = 3;
 	  int min = 1;
 	  int range = max - min + 1;
@@ -15,20 +15,20 @@ public class RandomColour {
 	  
 	  switch (randomNum) {
 	    case 0:
-	      color = "Red";
+	      colour = "Red";
 	      break;
 	    case 1:
-	      color = "Blue";
+	      colour = "Blue";
 		  break;
 	    case 2:
-	      color = "Green";
+	      colour = "Green";
 		  break;
 	    case 3:
-		  color = "Yellow";
+		  colour = "White";
           break;
 	  }
 	  System.out.println(randomNum);
-	  return color;
+	  return colour;
 	
   }
   
