@@ -1,20 +1,21 @@
 package com.A22;
 import  swiftbot.*;
+import java.util.ArrayList;
 
 public class FlashingLights {
   static SwiftBotAPI swiftBot;
   
-  public static void flashingLights(String[] colours) throws InterruptedException {
+  public static void flashingLights(ArrayList<String> colours) throws InterruptedException {
 	  int[] red = new int[] { 255, 0, 0 };
 	  int[] blue = new int[] { 0, 0, 255 };
 	  int[] green = new int[] { 0, 255, 0 };
 	  int[] yellow = new int[] { 255, 255, 0 };
-	  int coloursLength = colours.length;
+	  int coloursLength = colours.size();
 	  int flashDuration = 700;
 	  
 	  try {
 		  
-		  swiftBot = new SwiftBotAPI();
+		  swiftBot = Main_Game.swiftbot;
 		} catch (Exception e) {
 	
 			System.out.println("\nI2C disabled!");
@@ -25,14 +26,14 @@ public class FlashingLights {
 	  
 	  try { 
 		  
-		  Underlight[] underlights  = new Underlight[coloursLength];
+		  Underlight[] underlights  = new Underlight[] {Underlight.MIDDLE_LEFT, Underlight.BACK_LEFT, Underlight.MIDDLE_RIGHT, Underlight.BACK_RIGHT};
 		  
 		  /* randomly select an underlight and flashing a certain color
 		   * in the order given in the 'colours' array
 		   * */
-		  for (int i = 0; i < coloursLength; i++) {
+		   for (int i = 0; i < coloursLength; i++) {
 			  
-			  int randomUnderlight = (int) (Math.random() * 3);
+			  /* int randomUnderlight = (int) (Math.random() * 3);
 			  
 			  switch (randomUnderlight) {
 				  
@@ -48,26 +49,26 @@ public class FlashingLights {
 			  case 3:
 				  underlights[i] = Underlight.MIDDLE_RIGHT; 
 				  break;
-			  }
+			  } */
 			  
-              if (colours[i].equalsIgnoreCase("red")) {
+              if (colours.get(i).equalsIgnoreCase("red")) {
 				  
-				  swiftBot.setUnderlight(underlights[i], red);
+				  swiftBot.setUnderlight(underlights[0], red);
 				  Thread.sleep(flashDuration);
 				  swiftBot.disableUnderlights();
-			  } else if(colours[i].equalsIgnoreCase("blue")) {
+			  } else if(colours.get(i).equalsIgnoreCase("blue")) {
 				  
-				  swiftBot.setUnderlight(underlights[i], blue);
+				  swiftBot.setUnderlight(underlights[1], blue);
 				  Thread.sleep(flashDuration);
 				  swiftBot.disableUnderlights();
-			  } else if(colours[i].equalsIgnoreCase("green")) {
+			  } else if(colours.get(i).equalsIgnoreCase("green")) {
 	
-				  swiftBot.setUnderlight(underlights[i], green);
+				  swiftBot.setUnderlight(underlights[2], green);
 				  Thread.sleep(flashDuration);	
 				  swiftBot.disableUnderlights();
-			  } else if(colours[i].equalsIgnoreCase("yellow")) {
+			  } else if(colours.get(i).equalsIgnoreCase("yellow")) {
 				  
-				  swiftBot.setUnderlight(underlights[i], yellow);
+				  swiftBot.setUnderlight(underlights[3], yellow);
 				  Thread.sleep(flashDuration);
 				  swiftBot.disableUnderlights();
 			  }
@@ -80,8 +81,8 @@ public class FlashingLights {
 		  System.exit(5);
 	  }
 	  
-	  System.out.println("Lights flashed successfully");
-	  Thread.sleep(2000);
+	  System.out.println("Sequence finished");
+	  Thread.sleep(500);
 	  swiftBot.disableUnderlights();
 	  
   }

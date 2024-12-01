@@ -1,5 +1,6 @@
 package com.A22;
 import java.util.*;
+import com.A22.Main_Game;
 
 public class RandomColour {
   
@@ -24,10 +25,9 @@ public class RandomColour {
 	      colour = "Green";
 		  break;
 	    case 3:
-		  colour = "White";
+		  colour = "Yellow";
           break;
 	  }
-	  System.out.println(randomNum);
 	  return colour;
 	
   }

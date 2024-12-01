@@ -4,35 +4,41 @@ import swiftbot.*;
 import com.A22.RandomColour;
 import java.util.ArrayList;
 import java.util.Scanner;
+import com.A22.FlashingLights;
+
 
 public class Main_Game {
 	public static int round = 1;
 	public static int score = 0;
 	public static String buttonPressed = null;
 	public static ArrayList<String> coloursGenerated = new ArrayList<String>();
-	
-	public static String[][] coloursToNums = {{"Red", "0"}, {"Blue", "1"}, {"Green", "2"}, {"White", "3"}};
 	static SwiftBotAPI swiftbot;
 	
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
 	swiftbot = new SwiftBotAPI();
 	
-	for (int x = 1; x <= round; x ++) {
-		listSequence();
-	}
 	
-	if (matchInput(coloursGenerated)) {
-		if (roundCheck()) {
-			if (quitCheck()) {
-				score ++;
-				VictoryDrive.main();
+	while (true) {
+		System.out.println("Round: " + round + "\nScore: " + score);
+		listSequence();
+		FlashingLights.flashingLights(coloursGenerated);
+		if (matchInput(coloursGenerated)) {
+			score ++;
+			if (scoreCheck()) {
+				if (quitCheck()) {
+					VictoryDrive.main();
+				} else {
+					round ++;
+				}
 			} else {
-				progressRound();
+				round ++;
 			}
 		} else {
-			progressRound();
+			break;
 		}
 	}
+	
+	lose();
 	
   }
   
@@ -40,14 +46,9 @@ public class Main_Game {
 	  String newColour = RandomColour.randomColour();
 	  coloursGenerated.add(newColour);
   }
-  
-  public static void progressRound() {
-	  round ++;
-	  score ++;
-  }
 
-  public static boolean roundCheck() {
-	  if (round % 5 == 0) {
+  public static boolean scoreCheck() {
+	  if (score % 5 == 0 && score != 0) {
 		  return true;
 	  }
 	  return false;
@@ -58,10 +59,11 @@ public class Main_Game {
 	  String answer = "";
 	  System.out.println("Your score is " + score);
 	 
-	  while (answer != "y" && answer != "n") {
+	  while (!answer.equals("y") && !answer.equals("n")) {
 		  System.out.println("Quit game? (y/n)");
 		  try {
-			  answer = uInput.nextLine().toLowerCase();
+			  answer = uInput.next().toLowerCase();
+			  System.out.println(answer);
 		  }
 		  catch (Exception e) {
 			  answer = "";
@@ -79,23 +81,33 @@ public class Main_Game {
   }
   
   public static String getButtonInput() {
+	  buttonPressed = null;
 	  Button[] buttons = new Button[] {Button.A, Button.B, Button.X, Button.Y};
 	  
 	  swiftbot.enableButton(buttons[0], () -> {
 		 buttonPressed = "Red";
+		 System.out.println(buttonPressed);
 	  });
 	  swiftbot.enableButton(buttons[1], () -> {
 		  buttonPressed = "Blue";
+		  System.out.println(buttonPressed);
 	  });
 	  swiftbot.enableButton(buttons[2], () -> {
 		  buttonPressed = "Green";
+		  System.out.println(buttonPressed);
 	  });
 	  swiftbot.enableButton(buttons[3], () -> {
-		  buttonPressed = "White";
+		  buttonPressed = "Yellow";
+		  System.out.println(buttonPressed);
 	  });
 	  
+	  System.out.println("Awaiting button input");
 	  while (buttonPressed == null) {
-		  
+		  try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			
+		}
 	  }
 	  swiftbot.disableAllButtons();
 	  return buttonPressed;
@@ -108,6 +120,17 @@ public class Main_Game {
 		  }
 	  }
 	  return true;
+  }
+  
+  public static void lose() {
+	  System.out.println("Game Over");
+	  if (scoreCheck()) {
+		  VictoryDrive.main();
+	  } else {
+		  System.out.println("Round: " + round + "\nScore: " + score);
+		  System.out.println(coloursGenerated);
+		System.exit(0);  
+	  }
   }
   
 }

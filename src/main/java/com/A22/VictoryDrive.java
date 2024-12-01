@@ -10,16 +10,19 @@ public class VictoryDrive {
 	static SwiftBotAPI swiftbot;
 	
 	public static void main() {
-		swiftbot = new SwiftBotAPI();
+		swiftbot = Main_Game.swiftbot;
+		System.out.println("See you again, champ!");
+		System.out.println("Round: " + Main_Game.round + "\nScore: " + Main_Game.score);
 		randomLights();
 		drive();
+		System.exit(0);
 	}
 	
 	public static void randomLights() {
 		int[] red = new int[] {255, 0, 0};
 		int[] green = new int[] {0, 255, 0};
 		int[] blue = new int[] {0, 0, 255};
-		int[] white = new int[] {255, 255, 255};
+		int[] yellow = new int[] {255, 255, 0};
 		Random rand = new Random();
 		int flashNumToAdd;
 		Underlight[] bottomLights = new Underlight[] {Underlight.FRONT_LEFT, Underlight.FRONT_RIGHT, Underlight.MIDDLE_LEFT, Underlight.MIDDLE_RIGHT, Underlight.BACK_LEFT, Underlight.BACK_RIGHT };
@@ -47,7 +50,7 @@ public class VictoryDrive {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
 			}
-			swiftbot.setUnderlight(bottomLights[x], white);
+			swiftbot.setUnderlight(bottomLights[x], yellow);
 			try {
 				Thread.sleep(1000);
 			}
