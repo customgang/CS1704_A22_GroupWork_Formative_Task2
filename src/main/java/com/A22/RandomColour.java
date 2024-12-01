@@ -1,10 +1,12 @@
 package com.A22;
 import java.util.*;
 import com.A22.Main_Game;
+import java.util.Random;
 
 public class RandomColour {
-  
   public static String randomColour() {
+	  
+	  Random rand = new Random();
 	  
 	  String colour = "";
 	  int max = 3;
@@ -12,7 +14,7 @@ public class RandomColour {
 	  int range = max - min + 1;
 	  
 	  // creating random number from 0 - 3
-	  int randomNum = (int) (Math.random() * 3);
+	  int randomNum = rand.nextInt(4);
 	  
 	  switch (randomNum) {
 	    case 0:

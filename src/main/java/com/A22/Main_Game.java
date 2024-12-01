@@ -26,6 +26,7 @@ public class Main_Game {
 			score ++;
 			if (scoreCheck()) {
 				if (quitCheck()) {
+					System.out.println("See you again, champ!");
 					VictoryDrive.main();
 				} else {
 					round ++;
@@ -63,14 +64,12 @@ public class Main_Game {
 		  System.out.println("Quit game? (y/n)");
 		  try {
 			  answer = uInput.next().toLowerCase();
-			  System.out.println(answer);
 		  }
 		  catch (Exception e) {
 			  answer = "";
 		  }
 	  }
 	  
-	  uInput.close();
 	  
 	  switch (answer) {
 	  case "y":
@@ -87,18 +86,22 @@ public class Main_Game {
 	  swiftbot.enableButton(buttons[0], () -> {
 		 buttonPressed = "Red";
 		 System.out.println(buttonPressed);
+		 swiftbot.disableAllButtons();
 	  });
 	  swiftbot.enableButton(buttons[1], () -> {
 		  buttonPressed = "Blue";
 		  System.out.println(buttonPressed);
+		  swiftbot.disableAllButtons();
 	  });
 	  swiftbot.enableButton(buttons[2], () -> {
 		  buttonPressed = "Green";
 		  System.out.println(buttonPressed);
+		  swiftbot.disableAllButtons();
 	  });
 	  swiftbot.enableButton(buttons[3], () -> {
 		  buttonPressed = "Yellow";
 		  System.out.println(buttonPressed);
+		  swiftbot.disableAllButtons();
 	  });
 	  
 	  System.out.println("Awaiting button input");
@@ -124,7 +127,7 @@ public class Main_Game {
   
   public static void lose() {
 	  System.out.println("Game Over");
-	  if (scoreCheck()) {
+	  if (score >= 5) {
 		  VictoryDrive.main();
 	  } else {
 		  System.out.println("Round: " + round + "\nScore: " + score);

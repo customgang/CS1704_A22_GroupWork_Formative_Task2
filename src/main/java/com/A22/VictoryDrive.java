@@ -11,7 +11,6 @@ public class VictoryDrive {
 	
 	public static void main() {
 		swiftbot = Main_Game.swiftbot;
-		System.out.println("See you again, champ!");
 		System.out.println("Round: " + Main_Game.round + "\nScore: " + Main_Game.score);
 		randomLights();
 		drive();
